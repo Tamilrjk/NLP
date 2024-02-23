@@ -18,12 +18,12 @@ selenium: "Used to automate web scraping of comments from YouTube videos."
 
 selenium.webdriver.common.by: "Provides methods for locating elements on web pages 
 
+# WebDrives
 ~~~ bash
 # Create a new instance of the Microsoft Edge WebDriver
 driver = webdriver.Edge()
 ~~~
 
-# WebDrives
 This line creates a new instance of the Microsoft Edge WebDriver (`webdriver.Edge()`) and assigns it to the variable `driver`. This allows our code to interact with and automate an Edge browser window in the background.
 
 Make sure you have the Selenium library installed (pip install selenium) and the Microsoft Edge WebDriver downloaded and properly configured in your system environment variables. You can find more information about the Edge WebDriver here: https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver
