@@ -236,3 +236,5 @@ fig = px.histogram(df, x='Sentiment', color='Sentiment', title='Sentiment Distri
 This line creates a histogram using Plotly to visualize the distribution of sentiments across all comments.
 The histogram shows the frequency of each sentiment category ("positive", "negative", "neutral").
 Different colors are used to represent each category for a clear visual distinction.
+
+![image description](Sentiment Analysis/newplot (4).png)
