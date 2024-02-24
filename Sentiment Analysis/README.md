@@ -180,3 +180,7 @@ import matplotlib.pyplot as plt: Imports the pyplot module from matplotlib for v
 all_comments = ' '.join(df['Comment']): Combines all comments from the "Comment" column in your DataFrame into a single string, creating a continuous text input for the word cloud.
 Creates a WordCloud object with specified dimensions (width=800, height=400) and a white background color.
 Calls the generate method on the wordcloud object, passing the all_comments string as input. This generates the word cloud, where word frequencies and prominence are visually represented.
+
+
+![Image description](Sentiment Analysis/download.png)
+
