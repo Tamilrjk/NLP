@@ -184,3 +184,55 @@ Calls the generate method on the wordcloud object, passing the all_comments stri
 
 ![Image description](Sentiment Analysis/download.png)
 
+# VADER Sentiment Scoring
+~~~bash
+from nltk.sentiment import SentimentIntensityAnalyzer
+from tqdm.notebook import tqdm
+import plotly.express as px
+
+analyzer= SentimentIntensityAnalyzer()
+~~~
+from nltk.sentiment import SentimentIntensityAnalyzer: This line imports the SentimentIntensityAnalyzer class from the NLTK library. This class is used to perform sentiment analysis on text, assigning scores for positivity, negativity, neutrality, and compound sentiment (a mix of positive and negative).
+
+from tqdm.notebook import tqdm: This line imports the tqdm function from the tqdm.notebook module. This function is used to display progress bars for loops, making it easier to track the progress of long-running tasks.
+
+import plotly.express as px: This line imports the px function from the plotly.express library. This library is used for creating interactive visualizations, including charts and graphs.
+
+analyzer= SentimentIntensityAnalyzer(): This line creates an instance of the SentimentIntensityAnalyzer class and assigns it to the variable analyzer. This object will be used later to perform sentiment analysis on some text.
+
+~~~bash
+# Perform sentiment analysis and add scores to the dataframe
+df['Sentiment_Scores'] = df['Processed_Comments'].apply(lambda x: analyzer.polarity_scores(x))
+
+# Extract compound sentiment score
+df['Compound_Score'] = df['Sentiment_Scores'].apply(lambda x: x['compound'])
+
+# Categorize sentiment as positive, negative, or neutral
+df['Sentiment'] = df['Compound_Score'].apply(lambda score: 'positive' if score > 0.05 else ('negative' if score < -0.05 else 'neutral'))
+
+# Visualize the sentiment distribution using Plotly
+fig = px.histogram(df, x='Sentiment', color='Sentiment', title='Sentiment Distribution',
+                   labels={'Sentiment': 'Sentiment Category', 'count': 'Frequency'},
+                   color_discrete_map={'positive': 'green', 'negative': 'red', 'neutral': 'blue'})
+fig.show()
+~~~
+
+df['Sentiment_Scores'] = df['Processed_Comments'].apply(lambda x: analyzer.polarity_scores(x))
+This line iterates through each comment in the "Processed_Comments" column using the apply method and a lambda function.
+For each comment, it calls the analyzer.polarity_scores(x) method, which uses the NLTK SentimentIntensityAnalyzer to analyze the sentiment and return a dictionary containing scores for positivity, negativity, neutrality, and compound sentiment.
+These scores are stored in a new column named "Sentiment_Scores" for each comment.
+
+df['Compound_Score'] = df['Sentiment_Scores'].apply(lambda x: x['compound'])
+This line extracts the "compound" sentiment score from the "Sentiment_Scores" dictionary for each comment.
+The compound score represents a mix of positive and negative sentiment, with positive values indicating positive sentiment, negative values indicating negative sentiment, and values closer to 0 indicating neutral sentiment.
+These scores are stored in a new column named "Compound_Score".
+
+df['Sentiment'] = df['Compound_Score'].apply(lambda score: 'positive' if score > 0.05 else ('negative' if score < -0.05 else 'neutral'))
+This line creates a new column named "Sentiment" and categorizes each comment based on its compound score.
+Comments with a score higher than 0.05 are classified as "positive", those with a score lower than -0.05 are classified as "negative", and all others are classified as "neutral".
+This helps you easily identify the overall sentiment expressed in each comment.
+
+fig = px.histogram(df, x='Sentiment', color='Sentiment', title='Sentiment Distribution', labels={'Sentiment': 'Sentiment Category', 'count': 'Frequency'}, color_discrete_map={'positive': 'green', 'negative': 'red', 'neutral': 'blue'})
+This line creates a histogram using Plotly to visualize the distribution of sentiments across all comments.
+The histogram shows the frequency of each sentiment category ("positive", "negative", "neutral").
+Different colors are used to represent each category for a clear visual distinction.
